@@ -29,3 +29,13 @@ c=3.9
 print(type(a))
 print(type(b))
 print(type(c))
+
+"""Case-Sensitive
+Variable names are case-sensitive."""
+
+#Example
+#This will create two variables:
+
+a = 4
+A = "Sally"
+#A will not overwrite a
