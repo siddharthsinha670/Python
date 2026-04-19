@@ -22,7 +22,7 @@ print(x + y + z)
 #Notice the space character after "Python " and "is ", without them the result would be "Pythonisawesome".
 
 
-#For numbers, the + character works as a mathematical operator:
+#For number s, the + character works as a mathematical operator:
 x = 5
 y = 10
 print(x + y)
