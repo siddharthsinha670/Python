@@ -4,7 +4,9 @@ passenger_age = "58"
 gender = "female"
 distance_km = 100
 
-# Details
+# {assangers Details
+print("   ")
+print("The details of the passengers are given below :")
 print("Train type :",train_type)
 print("Train Coach :",train_coach)
 print("Passenger age :",passenger_age)
@@ -90,7 +92,7 @@ else:
 if(train_coach == "3AC" or train_coach == "2AC"):
         Gst = discounted_price* 0.05
         final_price = discounted_price + Gst
-        print("Gst have been added into your ticket.",Gst)
+        print("Gst have been added into your ticket : Rs",Gst)
         print("You have to pay for your ticket after including all taxes :",final_price)
 
        
