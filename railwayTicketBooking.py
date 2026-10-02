@@ -1,10 +1,13 @@
+# Railway ticket Booking 
+
+#changable according to your need
 train_type = "Express"
 train_coach = "3AC"
 passenger_age = "58"
 gender = "female"
 distance_km = 100
 
-# {assangers Details
+# passangers Details
 print("   ")
 print("The details of the passengers are given below :")
 print("Train type :",train_type)
