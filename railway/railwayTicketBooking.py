@@ -1,129 +1,131 @@
 # Railway ticket Booking 
 
-#changable according to your need
+# Changeable according to your need
 train_type = "Express"
 train_coach = "2AC"
-passenger_age = "48"
+passenger_age = 48
 gender = "male"
 distance_km = 100
 tatkal = "yes"
 
-# passangers Details
+# Passenger Details
 print("   ")
 print("The details of the passengers are given below :")
-print("Train type :",train_type)
-print("Train Coach :",train_coach)
-print("Passenger age :",passenger_age)
-print("Gender :",gender)
-print("Distance traveling :",distance_km)
-print("tatkal booking details :",tatkal)
+print("Train type :", train_type)
+print("Train Coach :", train_coach)
+print("Passenger age :", passenger_age)
+print("Gender :", gender)
+print("Distance traveling :", distance_km)
+print("Tatkal booking details :", tatkal)
+print("--------------------------------------------------")
 
-# input validation
-if(distance_km >= 1 and 0 <= int(passenger_age) <= 120):
-        print(" ")
-else:
-    print("You are a invalid passenger!")   
-    exit()     
+# 1. Input Validation
+age = int(passenger_age)
+if distance_km <= 0 or not (1 <= age <= 120):
+    print("Invalid passenger or distance input!")   
+    exit()
 
-# Base Fare by Train Type & Class (per km rate):
-# Express train
-if(train_type == "Express"):
-    if(train_coach == "sleeper"):
-        ticket_price = distance_km * 0.64
-        print("You have to travel :",distance_km)
-    elif(train_coach == "3AC"):
-        ticket_price = distance_km * 1.40
-        print("You have to travel :",distance_km)
-    elif(train_coach == "2AC"):
-        ticket_price = distance_km * 2.00
-        print("You have  to travel :",distance_km)   
+# 2. Base Fare Calculation & Train Specific Surcharges
+base_rate = 0.0
+train_surcharge = 0.0
 
-# Superfast train
-elif(train_type == "Superfast"):
-    if(train_coach == "sleeper"):
-        flat_superFast_charges = 45
-        ticket_price = (distance_km * 0.80) + flat_superFast_charges
-        print("Charges of superfast train is added :",flat_superFast_charges)
-    elif(train_coach == "3AC"):
-        flat_superFast_charges = 45
-        ticket_price = (distance_km *1.70) + flat_superFast_charges
-        print("Charges of superfast train is added :",flat_superFast_charges) 
-    elif(train_coach == "2AC"):
-        flat_superFast_charges = 45
-        ticket_price = (distance_km * 2.40 )+ flat_superFast_charges
-        print("Charges of superfast train is added :",flat_superFast_charges)
-
-# Rajdhani train
-elif(train_type == "Rajdhani"):
-    if(train_coach == "3AC"):
-        catering_charges = 300
-        ticket_price = distance_km * 2.20 + catering_charges
-        print("Catering charges :",catering_charges) 
-
-    elif(train_coach == "2AC"):
-        catering_charges = 300
-        ticket_price =  distance_km * 3.00 + catering_charges
-        print("Catering charges :",catering_charges) 
-
+if train_type == "Express":
+    if train_coach == "sleeper":
+        base_rate = 0.60
+    elif train_coach == "3AC":
+        base_rate = 1.40
+    elif train_coach == "2AC":
+        base_rate = 2.00
     else:
-        print("This option is not available in this train.")   
-        exit()    
+        print("Invalid coach for Express train.")
+        exit()
 
-# Age & Gender Discounts / Rules:
-if(int(passenger_age) <= 5):
-    discounted_price = ticket_price * 0
-    print("You dont have to pay ticket price.")
-    print("Your have to pay for your ticket is :",discounted_price)
+elif train_type == "Superfast":
+    train_surcharge = 45.0  # Flat superfast charge
+    if train_coach == "sleeper":
+        base_rate = 0.80
+    elif train_coach == "3AC":
+        base_rate = 1.70
+    elif train_coach == "2AC":
+        base_rate = 2.40
+    else:
+        print("Invalid coach for Superfast train.")
+        exit()
 
-elif(int(passenger_age) <= 12):
-    discounted_price = ticket_price * (50/100)
-    print("You have to pay only 50% of your ticket price")
-    print("You have to pay for your ticket is :",discounted_price)
-
-elif(gender == "male" and int(passenger_age) >= 60):
-    discounted_price = ticket_price-(ticket_price * 40/100)
-    print("You will got a dicount of 40% on your ticket price.")
-    print("You have to pay for your ticket is :",discounted_price)
-
-elif(gender == "female" and int(passenger_age) >= 58):
-    discounted_price = ticket_price * (50/100)
-    print("You will get the discount of 50% on your ticket price")
-    print("You have to pay for your ticket is :",discounted_price)
-    
+elif train_type == "Rajdhani":
+    train_surcharge = 300.0  # Mandatory catering charge
+    if train_coach == "3AC":
+        base_rate = 2.20
+    elif train_coach == "2AC":
+        base_rate = 3.00
+    else:
+        print("Sleeper coach is not available in Rajdhani train.")
+        exit()
 else:
-    discounted_price = ticket_price
-    print("You dont get any discount offer.")
-    print("You have to pay for your ticket is: ",discounted_price) 
+    print("Invalid train type.")
+    exit()
 
+base_fare = distance_km * base_rate
 
-# taxes and final billing
-if(train_coach == "3AC" or train_coach == "2AC"):
-    Gst = discounted_price * 0.05
-    final_price = discounted_price + Gst
-    print("Gst have been added into your ticket : Rs",Gst)
-    print("You have to pay for your ticket after including all taxes :",final_price)
+# 3. Concession / Discount Calculation (Applied on Base Fare only)
+discount_pct = 0.0
+discount_reason = "No concession"
 
-elif(train_coach == "3AC" or train_coach == "2AC"):
-    tatkal_cost = 400
-    print("The tatkal cost will be added to your ticket price",tatkal_cost)
-    final_price = discounted_price + Gst + tatkal_cost
-    print("Your final cost will be the affter including the tatkal cost is :", final_price)        
+is_tatkal = str(tatkal).strip().lower() == "yes"
 
-       
+if is_tatkal:
+    discount_pct = 0.0
+    discount_reason = "Tatkal booking (concessions void)"
 else:
-    Gst = 0
-    final_price = discounted_price
-    print("You don't have to pay any tax")
-    print("You have to pay for your ticket is :", final_price)
+    if age < 5:
+        discount_pct = 1.0  # 100% discount (Free)
+        discount_reason = "Child under 5 (Free - 100% discount)"
+    elif 5 <= age <= 12:
+        discount_pct = 0.50  # 50% discount
+        discount_reason = "Child (5-12 yrs - 50% discount)"
+    elif gender.lower() == "female" and age >= 58:
+        discount_pct = 0.50  # 50% discount
+        discount_reason = "Senior Citizen Female (50% discount)"
+    elif gender.lower() == "male" and age >= 60:
+        discount_pct = 0.40  # 40% discount
+        discount_reason = "Senior Citizen Male (40% discount)"
 
-# tatkal ticket 
-if(tatkal == "yes"):
-    if(train_coach == "sleeper"):
-        tatkal_cost = 150
-        final_price = discounted_price + Gst + tatkal_cost
-        print("Your final cost will be the after adding the tatkal cost is :", final_price)
-    elif(train_coach == "3AC" or train_coach == "2AC"):
-        tatkal_cost = 400
-        print("The tatkal cost will be added to your ticket price", tatkal_cost)
-        final_price = discounted_price + Gst + tatkal_cost
-        print("Your final cost will be the affter including the tatkal cost is :", final_price)
+discount_amount = base_fare * discount_pct
+discounted_base_fare = base_fare - discount_amount
+
+# 4. Tatkal Surcharge
+tatkal_surcharge = 0.0
+if is_tatkal:
+    if train_coach == "sleeper":
+        tatkal_surcharge = 150.0
+    elif train_coach in ["3AC", "2AC"]:
+        tatkal_surcharge = 400.0
+
+# 5. Net Fare before Tax
+net_fare = discounted_base_fare + train_surcharge + tatkal_surcharge
+
+# 6. GST Calculation (5% on net fare for AC classes, 0% for Sleeper)
+if train_coach in ["3AC", "2AC"]:
+    gst = net_fare * 0.05
+else:
+    gst = 0.0
+
+total_payable = net_fare + gst
+
+# 7. Output Detailed Receipt
+print("\n================== FARE RECEIPT ==================")
+print(f"Base Rate (per km)      : Rs. {base_rate:.2f}")
+print(f"Distance Traveled        : {distance_km} km")
+print(f"Base Fare               : Rs. {base_fare:.2f}")
+print(f"Concession Applied      : {discount_reason}")
+print(f"Discount Amount         : -Rs. {discount_amount:.2f}")
+print(f"Discounted Base Fare    : Rs. {discounted_base_fare:.2f}")
+if train_surcharge > 0:
+    print(f"Train Surcharge/Catering: Rs. {train_surcharge:.2f}")
+if tatkal_surcharge > 0:
+    print(f"Tatkal Surcharge        : Rs. {tatkal_surcharge:.2f}")
+print(f"Net Fare (Before Tax)   : Rs. {net_fare:.2f}")
+print(f"GST (5% on AC)          : Rs. {gst:.2f}")
+print("--------------------------------------------------")
+print(f"Total Amount Payable    : Rs. {total_payable:.2f}")
+print("==================================================")
