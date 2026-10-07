@@ -1,11 +1,11 @@
-n = int(input("enter the number")) 
+number = 30
 
+is_prime = True
 
-for i in range(2, num + 1):
-    if num % i == 0:
-        count += 1
+if number > 1:
+    for i in range(2 , number):
+        if(number % i) == 0:
+            is_prime = False
+            break
 
-if count == 2:
-    print(num, "is a prime number")
-else:
-    print(num, "is not a prime number")
+print(is_prime)
